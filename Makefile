@@ -11,13 +11,17 @@
 # **************************************************************************** #
 
 NAME	=	libftprintf.a
-LIBDIR	=	./libft/
+LIBDIR	=	libft/
 LIBFT	=	libft.a
-SRCS	=
-SRCS_B	=	
+SRCSF	=	ft_printf.c
+SRCS_BF	=	
+SRCDIR	=	srcs/
+INDIR	=	includes/
 CC		=	gcc
 CFLAGS	=	-Wall -Wextra -Werror
 
+SRCS	=	$(addprefix $(SRCDIR),$(SRCSF))
+SRCS_B	=	$(addprefix $(SRCDIR),$(SRCS_BF))
 OBJS	=	$(SRCS:.c=.o)
 OBJS_B	=	$(SRCS_B:.c=.o)
 
@@ -28,15 +32,19 @@ all		:	$(NAME)
 
 $(NAME)	:	$(OBJS)
 			make -C $(LIBDIR)
-			cp $(LIBDIR)$(LIBFT) ./$(NAME)
+			cp $(LIBDIR)$(LIBFT) $(NAME)
 			ar -vrs $(NAME) $(OBJS)
 
 bonus	:	$(NAME) $(OBJS_B)
 			ar -vrs $(NAME) $(OBJS_B)
 
+libft	:
+			make -C $(LIBDIR)
+			cp $(LIBDIR)$(LIBFT) $(LIBFT)
+
 clean	:
 			make clean -C $(LIBDIR)
-			rm -f $(OBJS) $(OBJS_B)
+			rm -f $(OBJS) $(OBJS_B) $(LIBFT)
 
 fclean	:	clean
 			make fclean -C $(LIBDIR)
@@ -44,4 +52,4 @@ fclean	:	clean
 
 re		:	fclean $(NAME)
 
-.PHONY	:	re clean fclean
+.PHONY	:	re clean fclean libft
