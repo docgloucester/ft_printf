@@ -10,11 +10,12 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
+#include <ft_printf.h>
 
 int	ft_printf(const char *to_parse, ...)
 {
-	t_printf	*myprintf;
+	t_printf		*myprintf;
+	unsigned int	n;
 
 	if (!(myprintf = (t_printf*)malloc(sizeof(t_printf))))
 		return (-1);
@@ -31,5 +32,8 @@ int	ft_printf(const char *to_parse, ...)
 			write(1, to_parse + myprintf->nbwritten, 1);
 		(myprintf->nbwritten)++;
 	}
-	return (myprintf->nbwritten);
+	va_end(myprintf->args);
+	n = myprintf->nbwritten;
+	free(myprintf);
+	return (n);
 }

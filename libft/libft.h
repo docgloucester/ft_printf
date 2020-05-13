@@ -64,6 +64,11 @@ void			ft_putendl_fd(char *s, int fd);
 void			ft_putnbr_fd(int n, int fd);
 void			ft_putstr_fd(char *s, int fd);
 
+void			ft_putchar(char c);
+void			ft_putendl(char *s);
+void			ft_putnbr(int n);
+void			ft_putstr(char *s);
+
 void			ft_lstadd_back(t_list **alst, t_list *new);
 void			ft_lstadd_front(t_list **alst, t_list *new);
 void			ft_lstclear(t_list **lst, void (*del)(void *));

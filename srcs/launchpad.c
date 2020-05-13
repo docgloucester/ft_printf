@@ -10,9 +10,12 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
+#include <ft_printf.h>
 
 void	launch_parsing(const char *to_parse, t_printf *myprintf)
 {
-	while (to_parse[myprintf->nbwritten])
+	while (to_parse[myprintf->nbwritten] == '%' || )
+	{
+
+	}
 }

@@ -1,19 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putstr_fd.c                                     :+:      :+:    :+:   */
+/*   ft_putendl.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rgilles <rgilles@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/04/08 19:44:40 by rgilles           #+#    #+#             */
-/*   Updated: 2020/04/08 19:44:42 by rgilles          ###   ########.fr       */
+/*   Created: 2020/05/13 17:41:49 by rgilles           #+#    #+#             */
+/*   Updated: 2020/05/13 17:43:22 by rgilles          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_putstr_fd(char *s, int fd)
+void	ft_putendl(char *s)
 {
-	if (s && *s)
-		write(fd, s, ft_strlen(s));
+	ft_putendl_fd(s, 1);
 }

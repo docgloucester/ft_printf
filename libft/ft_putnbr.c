@@ -1,19 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putstr_fd.c                                     :+:      :+:    :+:   */
+/*   ft_putnbr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rgilles <rgilles@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/04/08 19:44:40 by rgilles           #+#    #+#             */
-/*   Updated: 2020/04/08 19:44:42 by rgilles          ###   ########.fr       */
+/*   Created: 2020/05/13 17:40:11 by rgilles           #+#    #+#             */
+/*   Updated: 2020/05/13 17:40:13 by rgilles          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_putstr_fd(char *s, int fd)
+void	ft_putnbr(int n)
 {
-	if (s && *s)
-		write(fd, s, ft_strlen(s));
+	ft_putnbr_fd(n, 1);
 }

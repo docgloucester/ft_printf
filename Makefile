@@ -26,7 +26,7 @@ OBJS	=	$(SRCS:.c=.o)
 OBJS_B	=	$(SRCS_B:.c=.o)
 
 .c.o	:
-			$(CC) $(CFLAGS) -c $< -o $(<:.c=.o)
+			$(CC) $(CFLAGS) -I$(LIBDIR) -I$(INDIR) -c $< -o $(<:.c=.o)
 
 all		:	$(NAME)
 
