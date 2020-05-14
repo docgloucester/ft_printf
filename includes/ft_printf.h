@@ -22,6 +22,7 @@ typedef struct		s_printf
 	va_list			args;
 	char			specif;
 	unsigned int	nbwritten;
+	unsigned int	i;
 }					t_printf;
 
 int					ft_printf(const char*, ...);

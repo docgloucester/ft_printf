@@ -21,16 +21,16 @@ int	ft_printf(const char *to_parse, ...)
 		return (-1);
 	va_start(myprintf->args, to_parse);
 	myprintf->nbwritten = 0;
-	while (to_parse[myprintf->nbwritten])
+	myprintf->i = 0;
+	while (to_parse[myprintf->i])
 	{
-		if (to_parse[myprintf->nbwritten] == '%')
+		if (to_parse[myprintf->i] == '%')
 		{
-			myprintf->nbwritten++;
-			launch_parsing(to_parse, myprintf);
+			myprintf->i++;
+			get_parsing_params(to_parse, myprintf);
 		}
 		else
-			write(1, to_parse + myprintf->nbwritten, 1);
-		(myprintf->nbwritten)++;
+			write(1, to_parse + (myprintf->i)++, 1);
 	}
 	va_end(myprintf->args);
 	n = myprintf->nbwritten;
