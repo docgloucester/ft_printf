@@ -14,25 +14,35 @@
 
 void	get_parsing_params(const char *to_parse, t_printf *myprintf)
 {
-	while (ft_strchr("0123456789*.-cspdiuxX%", to_parse[myprintf->i]))
-	{
 		if(to_parse[myprintf->i] == '-')
-			myprintf->minus = 1;
+			myprintf->minus = to_parse[(myprintf->i)++];
 		if(to_parse[myprintf->i] == '0')
-			myprintf->zero = 1;
+			myprintf->zero = to_parse[(myprintf->i)++];
+		if(ft_strchr("123456789*", to_parse[myprintf->i]))
+		{
+			if(to_parse[(myprintf->i)] == '*')
+				myprintf->field_len = va_arg(myprintf->args, int);
+			else
+				myprintf->field_len = ft_atoi(to_parse + myprintf->i);
+			while (ft_strchr("123456789*", to_parse[myprintf->i]))
+				(myprintf->i)++;
+			if (myprintf->field_len < 0)
+			{
+				myprintf->precision = -(myprintf->precision);
+				myprintf->minus = '-';
+			}
+		}
 		if(to_parse[myprintf->i] == '.')
 		{
-			if(to_parse[(myprintf->i)++]) == '*'
-				myprintf->precision = va_arg(myprintf->args, int)
+			if(to_parse[++(myprintf->i)] == '*')
+				myprintf->precision = va_arg(myprintf->args, int);
 			else
-				myprintf->precision = ft_atoi(to_parse + myprintf->i)
-			myprintf->i += 
+				myprintf->precision = ft_atoi(to_parse + myprintf->i);
+			while (ft_strchr("123456789*", to_parse[myprintf->i]))
+				(myprintf->i)++;
 			if (myprintf->precision < 0)
 				myprintf->precision = 0;
-		}
-		if(ft_strchr("123456789*", to_parse[myprintf->i]))
-			myprintf->field_len = 
-		if(ft_strchr("cspdiuxX%", to_parse[myprintf->i]))
+		} 
+		if (ft_strchr("cspdiuxX%", to_parse[myprintf->i]))
 			myprintf->conv = to_parse[(myprintf->i)++];
-	}
 }

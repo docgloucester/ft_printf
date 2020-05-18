@@ -13,7 +13,7 @@
 NAME	=	libftprintf.a
 LIBDIR	=	libft/
 LIBFT	=	libft.a
-SRCSF	=	ft_printf.c
+SRCSF	=	ft_printf.c launchpad.c
 SRCS_BF	=	
 SRCDIR	=	srcs/
 INDIR	=	includes/

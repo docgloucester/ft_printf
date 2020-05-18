@@ -26,8 +26,12 @@ int	ft_printf(const char *to_parse, ...)
 	{
 		if (to_parse[myprintf->i] == '%')
 		{
-			myprintf->i++;
-			get_parsing_params(to_parse, myprintf);
+			if (to_parse[++(myprintf->i)] == '%')
+				write(1, to_parse + (myprintf->i)++, 1);
+			else
+			{
+				get_parsing_params(to_parse, myprintf);
+			}
 		}
 		else
 			write(1, to_parse + (myprintf->i)++, 1);

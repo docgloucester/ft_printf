@@ -20,11 +20,16 @@
 typedef struct		s_printf
 {
 	va_list			args;
-	char			specif;
-	unsigned int	nbwritten;
 	unsigned int	i;
+	unsigned int	nbwritten;
+	char			minus;
+	char			zero;
+	int				field_len;
+	int				precision;
+	char			conv;
 }					t_printf;
 
+void				get_parsing_params(const char *to_parse, t_printf *myprintf);
 int					ft_printf(const char*, ...);
 
 #endif
