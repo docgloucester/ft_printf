@@ -30,7 +30,9 @@ int	ft_printf(const char *to_parse, ...)
 				write(1, to_parse + (myprintf->i)++, 1);
 			else
 			{
+				init(myprintf);
 				get_parsing_params(to_parse, myprintf);
+				printstring(myprintf);
 			}
 		}
 		else
