@@ -27,16 +27,22 @@ int	ft_printf(const char *to_parse, ...)
 		if (to_parse[myprintf->i] == '%')
 		{
 			if (to_parse[++(myprintf->i)] == '%')
+			{
 				write(1, to_parse + (myprintf->i)++, 1);
+				(myprintf->nbwritten)++;
+			}
 			else
 			{
 				init(myprintf);
 				get_parsing_params(to_parse, myprintf);
-				printstring(myprintf);
+				myprintf->nbwritten += display(myprintf);
 			}
 		}
 		else
+		{
 			write(1, to_parse + (myprintf->i)++, 1);
+			(myprintf->nbwritten)++;
+		}
 	}
 	va_end(myprintf->args);
 	n = myprintf->nbwritten;

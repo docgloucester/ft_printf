@@ -1,27 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_memcpy.c                                        :+:      :+:    :+:   */
+/*   printc.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rgilles <rgilles@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/03/27 22:47:05 by rgilles           #+#    #+#             */
-/*   Updated: 2020/03/27 22:47:07 by rgilles          ###   ########.fr       */
+/*   Created: 2020/05/19 11:24:04 by rgilles           #+#    #+#             */
+/*   Updated: 2020/05/19 11:24:06 by rgilles          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include <ft_printf.h>
 
-void	*ft_memcpy(void *dest, const void *src, size_t n)
+int	print_c(t_printf *myprintf)
 {
-	char	*copybuffer;
-
-	copybuffer = (char*)dest;
-	if (!src || !dest)
-		return (NULL);
-	while (n--)
-	{
-		*copybuffer++ = *(char*)(src++);
-	}
-	return (dest);
+	ft_putchar((unsigned char)va_arg(myprintf->args, int));
+	return (1);
 }
