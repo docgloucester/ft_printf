@@ -1,26 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_nbdigits_base.c                                 :+:      :+:    :+:   */
+/*   ft_putnbr_fd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rgilles <rgilles@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/06/08 15:05:32 by rgilles           #+#    #+#             */
-/*   Updated: 2020/06/08 15:05:35 by rgilles          ###   ########.fr       */
+/*   Created: 2020/04/08 19:52:47 by rgilles           #+#    #+#             */
+/*   Updated: 2020/04/08 19:52:49 by rgilles          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int	ft_nbdigits_base(unsigned int nb, int base)
-{
-	int i;
+#include "libft.h"
 
-	if (nb == 0)
-		return (1);
-	i = 0;
-	while (nb != 0)
+void	ft_putnbr_uns_base_fd(unsigned int u_n, int fd, char *charset)
+{
+	unsigned int	base;
+
+	base = ft_strlen(charset);
+	if (u_n >= base)
 	{
-		nb /= base;
-		i++;
+		ft_putnbr_uns_base_fd(u_n / base, fd, charset);
+		ft_putchar_fd(charset[u_n % base], fd);
 	}
-	return (i);
+	else
+		ft_putchar_fd(charset[u_n], fd);
 }

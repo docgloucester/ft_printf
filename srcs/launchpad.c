@@ -68,7 +68,9 @@ int		display(t_printf *myprintf)
 		return (print_d(myprintf, 0));
 	else if (myprintf->conv == 'u')
 		return (print_d(myprintf, 1));
-	else if (myprintf->conv == 'x' || myprintf->conv == 'X')
-		return (print_x(myprintf));
+	else if (myprintf->conv == 'x')
+		return (print_x(myprintf, "0123456789abcdef"));
+	else if (myprintf->conv == 'X')
+		return (print_x(myprintf, "0123456789ABCDEF"));
 	return (0);
 }
