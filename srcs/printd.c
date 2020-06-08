@@ -12,19 +12,6 @@
 
 #include <ft_printf.h>
 
-int	digits_nb(int nb, int base)
-{
-	int i;
-
-	i = 0;
-	while (nb != 0)
-	{
-		nb /= base;
-		i++;
-	}
-	return (i);
-}
-
 int	print_d(t_printf *myprintf, int is_unsigned)
 {
 	unsigned int	nb;
@@ -41,7 +28,7 @@ int	print_d(t_printf *myprintf, int is_unsigned)
 		nb = temp < 0 ? -temp : temp;
 		negat = temp < 0 ? 1 : 0;
 	}
-	nb_digits = digits_nb(nb, 10);
+	nb_digits = ft_nbdigits_base(nb, 10);
 	if (negat == 1)
 		write(1, "-", 1);
 	if (myprintf->precision >= 0 && myprintf->precision > nb_digits)
