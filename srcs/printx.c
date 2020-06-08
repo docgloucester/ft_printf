@@ -12,13 +12,13 @@
 
 #include <ft_printf.h>
 
-int	print_x(t_printf *myprintf, char *charset)
+int	print_uns_base(t_printf *myprintf, char *charset)
 {
 	unsigned int	nb;
 	int				nb_digits;
 
 	nb = va_arg(myprintf->args, unsigned int);
-	nb_digits = ft_nbdigits_base(nb, 16);
+	nb_digits = ft_nbdigits_base(nb, ft_strlen(charset));
 	if (myprintf->precision >= 0 && myprintf->precision > nb_digits)
 	{
 		while (nb_digits++ < myprintf->precision)
