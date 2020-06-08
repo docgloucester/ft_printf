@@ -62,11 +62,13 @@ char			*ft_substr(char const *s, unsigned int start, size_t len);
 void			ft_putchar_fd(char c, int fd);
 void			ft_putendl_fd(char *s, int fd);
 void			ft_putnbr_fd(int n, int fd);
+void			ft_putnbr_uns_fd(unsigned int nb, int fd);
 void			ft_putstr_fd(char *s, int fd);
 
 void			ft_putchar(char c);
 void			ft_putendl(char *s);
 void			ft_putnbr(int n);
+void			ft_putnbr_uns(unsigned int nb);
 void			ft_putstr(char *s);
 
 void			ft_lstadd_back(t_list **alst, t_list *new);

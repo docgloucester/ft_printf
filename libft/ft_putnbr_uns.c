@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   printu.c                                           :+:      :+:    :+:   */
+/*   ft_putnbr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rgilles <rgilles@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/05/19 18:08:52 by rgilles           #+#    #+#             */
-/*   Updated: 2020/05/19 18:08:53 by rgilles          ###   ########.fr       */
+/*   Created: 2020/05/13 17:40:11 by rgilles           #+#    #+#             */
+/*   Updated: 2020/05/13 17:40:13 by rgilles          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <ft_printf.h>
+#include "libft.h"
 
-int	print_u(t_printf *myprintf)
+void	ft_putnbr_uns(unsigned int n)
 {
-	return (0);
+	ft_putnbr_uns_fd(n, 1);
 }

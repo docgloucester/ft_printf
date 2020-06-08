@@ -65,9 +65,9 @@ int		display(t_printf *myprintf)
 	else if (myprintf->conv == 'p')
 		return (print_p(myprintf));
 	else if ((myprintf->conv == 'd') || (myprintf->conv == 'i'))
-		return (print_d(myprintf));
+		return (print_d(myprintf, 0));
 	else if (myprintf->conv == 'u')
-		return (print_u(myprintf));
+		return (print_d(myprintf, 1));
 	else if (myprintf->conv == 'x' || myprintf->conv == 'X')
 		return (print_x(myprintf));
 	return (0);

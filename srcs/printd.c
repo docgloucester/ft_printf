@@ -12,41 +12,45 @@
 
 #include <ft_printf.h>
 
-int	digits_nb(int nb)
+int	digits_nb(int nb, int base)
 {
 	int i;
 
 	i = 0;
 	while (nb != 0)
 	{
-		nb /= 10;
+		nb /= base;
 		i++;
 	}
 	return (i);
 }
 
-int	print_d(t_printf *myprintf)
+int	print_d(t_printf *myprintf, int is_unsigned)
 {
-	int	nb;
-	int	nb_digits;
-	int negat;
+	unsigned int	nb;
+	int				temp;
+	int				nb_digits;
+	int 			negat;
 
-	nb = va_arg(myprintf->args, int);
-	nb_digits = digits_nb(nb);
 	negat = 0;
+	if (is_unsigned)
+		nb = va_arg(myprintf->args, unsigned int);
+	else
+	{
+		temp = va_arg(myprintf->args, int);
+		nb = temp < 0 ? -temp : temp;
+		negat = temp < 0 ? 1 : 0;
+	}
+	nb_digits = digits_nb(nb, 10);
+	if (negat == 1)
+		write(1, "-", 1);
 	if (myprintf->precision >= 0 && myprintf->precision > nb_digits)
 	{
-		if (nb < 0)
-		{
-			write(1, "-", 1);
-			nb = -nb;
-			negat = 1;
-		}
 		while (nb_digits++ < myprintf->precision)
 			write(1, "0", 1);
-		ft_putnbr(nb);
+		ft_putnbr_uns(nb);
 		return (negat == 1 ? 1 + myprintf->precision :myprintf->precision);
 	}
-	ft_putnbr(nb);
+	ft_putnbr_uns(nb);
 	return (nb < 0 ? 1 + nb_digits : nb_digits);
 }
