@@ -1,19 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   printc.c                                           :+:      :+:    :+:   */
+/*   prints.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rgilles <rgilles@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/05/19 11:24:04 by rgilles           #+#    #+#             */
-/*   Updated: 2020/05/19 11:24:06 by rgilles          ###   ########.fr       */
+/*   Created: 2020/05/19 11:49:22 by rgilles           #+#    #+#             */
+/*   Updated: 2020/05/19 11:49:24 by rgilles          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <ft_printf.h>
 
-int	print_c(t_printf *myprintf)
+int	print_s(t_printf *myprintf)
 {
-	ft_putchar((unsigned char)va_arg(myprintf->args, int));
-	return (1);
+	const char	*str;
+	int			len;
+
+	str = va_arg(myprintf->args, const char*);
+	len = ft_strlen(str);
+	if (myprintf->precision >= 0 && myprintf->precision < len)
+	{
+		write(1, str, myprintf->precision);
+		return(myprintf->precision);
+	}
+	write(1, str, len);
+	return (len);
 }

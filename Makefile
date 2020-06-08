@@ -13,12 +13,12 @@
 NAME	=	libftprintf.a
 LIBDIR	=	libft/
 LIBFT	=	libft.a
-SRCSF	=	ft_printf.c launchpad.c printc.c
+SRCSF	=	ft_printf.c launchpad.c printc.c prints.c printp.c printd.c printu.c printx.c
 SRCS_BF	=	
 SRCDIR	=	srcs/
 INDIR	=	includes/
 CC		=	gcc
-CFLAGS	=	-Wall -Wextra -Werror
+CFLAGS	=	-Wall -Wextra 
 
 SRCS	=	$(addprefix $(SRCDIR),$(SRCSF))
 SRCS_B	=	$(addprefix $(SRCDIR),$(SRCS_BF))

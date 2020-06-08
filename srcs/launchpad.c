@@ -47,7 +47,7 @@ void	get_parsing_params(const char *to_parse, t_printf *myprintf)
 			myprintf->precision = va_arg(myprintf->args, int);
 		else
 			myprintf->precision = ft_atoi(to_parse + myprintf->i);
-		while (ft_strchr("123456789*", to_parse[myprintf->i]))
+		while (ft_strchr("0123456789*", to_parse[myprintf->i]))
 			(myprintf->i)++;
 		if (myprintf->precision < 0)
 			myprintf->precision = 0;
@@ -64,10 +64,8 @@ int		display(t_printf *myprintf)
 		return (print_s(myprintf));
 	else if (myprintf->conv == 'p')
 		return (print_p(myprintf));
-	else if (myprintf->conv == 'd')
+	else if ((myprintf->conv == 'd') || (myprintf->conv == 'i'))
 		return (print_d(myprintf));
-	else if (myprintf->conv == 'i')
-		return (print_i(myprintf));
 	else if (myprintf->conv == 'u')
 		return (print_u(myprintf));
 	else if (myprintf->conv == 'x' || myprintf->conv == 'X')

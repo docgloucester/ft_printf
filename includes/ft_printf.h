@@ -31,7 +31,14 @@ typedef struct		s_printf
 
 void				init(t_printf *myprintf);
 void				get_parsing_params(const char *to_parse, t_printf *myprintf);
+
 int					print_c(t_printf *myprintf);
+int					print_s(t_printf *myprintf);
+int					print_p(t_printf *myprintf);
+int					print_d(t_printf *myprintf);
+int					print_u(t_printf *myprintf);
+int					print_x(t_printf *myprintf);
+
 int					display(t_printf *myprintf);
 int					ft_printf(const char*, ...);
 
