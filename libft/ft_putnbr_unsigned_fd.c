@@ -14,7 +14,6 @@
 
 void	ft_putnbr_uns_fd(unsigned int u_n, int fd)
 {
-
 	if (u_n > 9)
 	{
 		ft_putnbr_uns_fd(u_n / 10, fd);
