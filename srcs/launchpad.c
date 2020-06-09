@@ -65,12 +65,12 @@ int		display(t_printf *myprintf)
 	else if (myprintf->conv == 'p')
 		return (print_p(myprintf));
 	else if ((myprintf->conv == 'd') || (myprintf->conv == 'i'))
-		return (print_d(myprintf, 0));
+		return (print_nb_base(myprintf, "0123456789", 1));
 	else if (myprintf->conv == 'u')
-		return (print_uns_base(myprintf, "0123456789"));
+		return (print_nb_base(myprintf, "0123456789", 0));
 	else if (myprintf->conv == 'x')
-		return (print_uns_base(myprintf, "0123456789abcdef"));
+		return (print_nb_base(myprintf, "0123456789abcdef", 0));
 	else if (myprintf->conv == 'X')
-		return (print_uns_base(myprintf, "0123456789ABCDEF"));
+		return (print_nb_base(myprintf, "0123456789ABCDEF", 0));
 	return (0);
 }

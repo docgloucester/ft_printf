@@ -35,8 +35,7 @@ void				get_parsing_params(const char *to_parse, t_printf *myprintf);
 int					print_c(t_printf *myprintf);
 int					print_s(t_printf *myprintf);
 int					print_p(t_printf *myprintf);
-int					print_d(t_printf *myprintf, int is_unsigned);
-int					print_uns_base(t_printf *myprintf, char *charset);
+int					print_nb_base(t_printf *myprintf, char *charset, int is_signed);
 
 int					display(t_printf *myprintf);
 int					ft_printf(const char*, ...);
