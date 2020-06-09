@@ -29,8 +29,7 @@ int	print_nb_base(t_printf *myprintf, char *charset, int is_signed)
 	else
 		nb = va_arg(myprintf->args, unsigned int);
 	nb_digits = ft_nbdigits_base(nb, ft_strlen(charset));
-	if (is_neg)
-		write(1, "-", 1);
+	write(1, "-", is_neg ? 1 : 0 );
 	if (myprintf->precision >= 0 && myprintf->precision > nb_digits)
 	{
 		while (nb_digits++ < myprintf->precision)

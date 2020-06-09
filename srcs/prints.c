@@ -22,7 +22,7 @@ int	print_s(t_printf *myprintf)
 	if (myprintf->precision >= 0 && myprintf->precision < len)
 	{
 		write(1, str, myprintf->precision);
-		return(myprintf->precision);
+		return (myprintf->precision);
 	}
 	write(1, str, len);
 	return (len);
