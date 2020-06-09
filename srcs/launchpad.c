@@ -63,7 +63,10 @@ int		display(t_printf *myprintf)
 	else if (myprintf->conv == 's')
 		return (print_s(myprintf));
 	else if (myprintf->conv == 'p')
-		return (print_p(myprintf));
+	{
+		write(1, "0x", 2);
+		return (2 + print_nb_base(myprintf, "0123456789abcdef", 0));
+	}
 	else if ((myprintf->conv == 'd') || (myprintf->conv == 'i'))
 		return (print_nb_base(myprintf, "0123456789", 1));
 	else if (myprintf->conv == 'u')
