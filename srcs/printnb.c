@@ -14,10 +14,10 @@
 
 int	print_nb_base(t_printf *myprintf, char *charset, int is_signed)
 {
-	unsigned int	nb;
-	int				is_neg;
-	int				temp;
-	int				nb_digits;
+	unsigned long long int	nb;
+	int						is_neg;
+	long long int			temp;
+	int						nb_digits;
 
 	is_neg = 0;
 	if (is_signed)

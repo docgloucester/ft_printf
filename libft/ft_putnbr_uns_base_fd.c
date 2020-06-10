@@ -12,9 +12,9 @@
 
 #include "libft.h"
 
-void	ft_putnbr_uns_base_fd(unsigned int u_n, int fd, char *charset)
+void	ft_putnbr_uns_base_fd(unsigned long long int u_n, int fd, char *charset)
 {
-	unsigned int	base;
+	unsigned long long int	base;
 
 	base = ft_strlen(charset);
 	if (u_n >= base)
