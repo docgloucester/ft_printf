@@ -12,7 +12,7 @@
 
 #include "libft.h"
 
-void	ft_putnbr_uns_fd(unsigned int u_n, int fd)
+void	ft_putnbr_uns_fd(unsigned long long int u_n, int fd)
 {
 	if (u_n > 9)
 	{
