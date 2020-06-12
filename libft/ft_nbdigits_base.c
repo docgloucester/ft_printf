@@ -10,7 +10,9 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-int	ft_nbdigits_base(unsigned int nb, int base)
+#include "libft.h"
+
+int	ft_nbdigits_base(unsigned long long int nb, int base)
 {
 	int i;
 

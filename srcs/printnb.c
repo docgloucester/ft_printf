@@ -12,7 +12,20 @@
 
 #include <ft_printf.h>
 
-int	print_nb_base(t_printf *myprintf, char *charset, int is_signed)
+int	actual_printing(t_printf *myptf, unsigned long long nb, char *chset, int nbd)
+{
+	if (myptf->precision >= 0 && myptf->precision > nbd)
+	{
+		while (nbd++ < myptf->precision)
+			write(1, "0", 1);
+		ft_putnbr_uns_base(nb, chset);
+		return (myptf->precision);
+	}
+	ft_putnbr_uns_base(nb, chset);
+	return (nbd);
+}
+
+int	print_nb_base(t_printf *myprintf, char *charset, int is_signed, int is_l)
 {
 	unsigned long long int	nb;
 	int						is_neg;
@@ -22,21 +35,19 @@ int	print_nb_base(t_printf *myprintf, char *charset, int is_signed)
 	is_neg = 0;
 	if (is_signed)
 	{
-		temp = va_arg(myprintf->args, int);
+		if (is_l)
+			temp = va_arg(myprintf->args, long int);
+		else
+			temp = va_arg(myprintf->args, int);
 		nb = temp < 0 ? -temp : temp;
 		is_neg = temp < 0 ? 1 : 0;
 	}
 	else
-		nb = va_arg(myprintf->args, unsigned int);
+		if (is_l)
+			nb = va_arg(myprintf->args, unsigned long int);
+		else
+			nb = va_arg(myprintf->args, unsigned int);
 	nb_digits = ft_nbdigits_base(nb, ft_strlen(charset));
 	write(1, "-", is_neg ? 1 : 0 );
-	if (myprintf->precision >= 0 && myprintf->precision > nb_digits)
-	{
-		while (nb_digits++ < myprintf->precision)
-			write(1, "0", 1);
-		ft_putnbr_uns_base(nb, charset);
-		return (myprintf->precision + is_neg);
-	}
-	ft_putnbr_uns_base(nb, charset);
-	return (nb_digits + is_neg);
+	return (actual_printing(myprintf, nb, charset, nb_digits) + is_neg);
 }
