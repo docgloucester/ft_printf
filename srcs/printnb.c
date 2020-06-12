@@ -35,16 +35,28 @@ int	print_nb_base(t_printf *myprintf, char *charset, int is_signed, int is_l)
 	is_neg = 0;
 	if (is_signed)
 	{
-		if (is_l)
-			temp = va_arg(myprintf->args, long int);
+		if (is_l == 1)
+			temp = va_arg(myprintf->args, long);
+		else if (is_l == 2)
+			temp = va_arg(myprintf->args, long long);
+		else if (is_l == -1)
+			temp = (short)va_arg(myprintf->args, int);
+		else if (is_l == -2)
+			temp = (char)va_arg(myprintf->args, int);
 		else
 			temp = va_arg(myprintf->args, int);
 		nb = temp < 0 ? -temp : temp;
 		is_neg = temp < 0 ? 1 : 0;
 	}
 	else
-		if (is_l)
-			nb = va_arg(myprintf->args, unsigned long int);
+		if (is_l == 1)
+			nb = va_arg(myprintf->args, unsigned long);
+		else if (is_l == 2)
+			nb = va_arg(myprintf->args, unsigned long long);
+		else if (is_l == -1)
+			nb = (unsigned short)va_arg(myprintf->args, int);
+		else if (is_l == -2)
+			nb = (unsigned char)va_arg(myprintf->args, int);
 		else
 			nb = va_arg(myprintf->args, unsigned int);
 	nb_digits = ft_nbdigits_base(nb, ft_strlen(charset));
