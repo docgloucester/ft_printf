@@ -77,3 +77,17 @@ int		display(t_printf *myprintf)
 		return (print_nb_base(myprintf, "0123456789ABCDEF", 0, 0));
 	return (0);
 }
+
+int complete_field_len(t_printf *myprintf, int nbwritten)
+{
+	char	c = ' ';
+	if (myprintf->field_len > nbwritten)
+	{
+		if (myprintf->zero && !myprintf->minus)
+			c = '0';
+		while (nbwritten++ < myprintf->field_len)
+			write(1, &c, 1);
+	}
+
+		
+}
