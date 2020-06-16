@@ -14,6 +14,13 @@
 
 int	print_c(t_printf *myprintf)
 {
+	int nbtofillfield;
+
+	nbtofillfield = 0;
+	if (myprintf->field_len > 1 && !myprintf->minus)
+		nbtofillfield = complete_field_len(myprintf, 1);
 	ft_putchar((unsigned char)va_arg(myprintf->args, int));
-	return (1);
+	if (myprintf->field_len > 1 && myprintf->minus)
+		nbtofillfield = complete_field_len(myprintf, 1);
+	return (1 + nbtofillfield);
 }

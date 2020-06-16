@@ -33,7 +33,7 @@ void	get_parsing_params(const char *to_parse, t_printf *myprintf)
 			myprintf->field_len = va_arg(myprintf->args, int);
 		else
 			myprintf->field_len = ft_atoi(to_parse + myprintf->i);
-		while (ft_strchr("123456789*", to_parse[myprintf->i]))
+		while (ft_strchr("1234567890*", to_parse[myprintf->i]))
 			(myprintf->i)++;
 		if (myprintf->field_len < 0)
 		{
@@ -78,16 +78,15 @@ int		display(t_printf *myprintf)
 	return (0);
 }
 
-int complete_field_len(t_printf *myprintf, int nbwritten)
+int		complete_field_len(t_printf *myprintf, int nbwritten)
 {
 	char	c = ' ';
-	if (myprintf->field_len > nbwritten)
-	{
-		if (myprintf->zero && !myprintf->minus)
-			c = '0';
-		while (nbwritten++ < myprintf->field_len)
-			write(1, &c, 1);
-	}
+	int		i;
 
-		
+	i = nbwritten;
+	if (myprintf->zero && !myprintf->minus)
+		c = '0';
+	while (i++ < myprintf->field_len)
+		write(1, &c, 1);
+	return (myprintf->field_len - nbwritten);
 }
