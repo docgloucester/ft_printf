@@ -12,17 +12,34 @@
 
 #include <ft_printf.h>
 
-int	actual_printing(t_printf *myptf, unsigned long long nb, char *chset, int nbd)
+int	prnt(t_printf *myptf, unsigned long long nb, char *chset, int nbd, int is_neg)
 {
+	int nbtofillfield;
+
+	nbtofillfield = 0;
+	if (is_neg && myptf->zero && !myptf->precision)
+		write(1, "-", 1);
 	if (myptf->precision >= 0 && myptf->precision > nbd)
 	{
+		if (myptf->field_len > (myptf->precision + is_neg) && !myptf->minus)
+			nbtofillfield = complete_field_len(myptf, myptf->precision + is_neg);
+		if (is_neg && (!myptf->zero || (myptf->zero && myptf->precision)))
+			write(1, "-", 1);
 		while (nbd++ < myptf->precision)
 			write(1, "0", 1);
 		ft_putnbr_uns_base(nb, chset);
-		return (myptf->precision);
+		if (myptf->field_len > (myptf->precision + is_neg) && myptf->minus)
+			nbtofillfield = complete_field_len(myptf, myptf->precision + is_neg);
+		return (myptf->precision + is_neg + nbtofillfield);
 	}
+	if (myptf->field_len > (nbd + is_neg) && !myptf->minus)
+		nbtofillfield = complete_field_len(myptf, nbd + is_neg);
+	if (is_neg && (!myptf->zero || (myptf->zero && myptf->precision)))
+		write(1, "-", 1);
 	ft_putnbr_uns_base(nb, chset);
-	return (nbd);
+	if (myptf->field_len > (nbd + is_neg) && myptf->minus)
+		nbtofillfield = complete_field_len(myptf, nbd + is_neg);
+	return (nbd + is_neg + nbtofillfield);
 }
 
 int	print_nb_base(t_printf *myprintf, char *charset, int is_signed, int is_l)
@@ -49,6 +66,7 @@ int	print_nb_base(t_printf *myprintf, char *charset, int is_signed, int is_l)
 		is_neg = temp < 0 ? 1 : 0;
 	}
 	else
+	{
 		if (is_l == 1)
 			nb = va_arg(myprintf->args, unsigned long);
 		else if (is_l == 2)
@@ -59,7 +77,7 @@ int	print_nb_base(t_printf *myprintf, char *charset, int is_signed, int is_l)
 			nb = (unsigned char)va_arg(myprintf->args, int);
 		else
 			nb = va_arg(myprintf->args, unsigned int);
+	}
 	nb_digits = ft_nbdigits_base(nb, ft_strlen(charset));
-	write(1, "-", is_neg ? 1 : 0 );
-	return (actual_printing(myprintf, nb, charset, nb_digits) + is_neg);
+	return (prnt(myprintf, nb, charset, nb_digits, is_neg));
 }
