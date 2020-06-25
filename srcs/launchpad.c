@@ -23,10 +23,13 @@ void	init(t_printf *myprintf)
 
 void	get_parsing_params(const char *to_parse, t_printf *myprintf)
 {
-	if (to_parse[myprintf->i] == '-')
-		myprintf->minus = to_parse[(myprintf->i)++];
-	if (to_parse[myprintf->i] == '0')
-		myprintf->zero = to_parse[(myprintf->i)++];
+	while (to_parse[myprintf->i] == '-' || to_parse[myprintf->i] == '0')
+	{
+		if (to_parse[myprintf->i] == '-')
+			myprintf->minus = to_parse[(myprintf->i)++];
+		if (to_parse[myprintf->i] == '0')
+			myprintf->zero = to_parse[(myprintf->i)++];
+	}
 	if (ft_strchr("123456789*", to_parse[myprintf->i]))
 	{
 		if (to_parse[(myprintf->i)] == '*')
@@ -87,7 +90,7 @@ int		complete_field_len(t_printf *myprintf, int nbwritten)
 
 	i = nbwritten;
 	c = ' ';
-	if (myprintf->zero && !myprintf->minus && !myprintf->precision)
+	if (myprintf->zero && !myprintf->minus && !(ft_strchr("pdiuxX", myprintf->conv) && myprintf->precision != -1))
 		c = '0';
 	while (i++ < myprintf->field_len)
 		write(1, &c, 1);
