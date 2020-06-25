@@ -52,14 +52,16 @@ void	get_parsing_params(const char *to_parse, t_printf *myprintf)
 		if (myprintf->precision < 0)
 			myprintf->precision = 0;
 	}
-	if (ft_strchr("cspdiuxX", to_parse[myprintf->i]))
+	if (ft_strchr("cspdiuxX%", to_parse[myprintf->i]))
 		myprintf->conv = to_parse[(myprintf->i)++];
 }
 
 int		display(t_printf *myprintf)
 {
 	if (myprintf->conv == 'c')
-		return (print_c(myprintf));
+		return (print_c(myprintf, 0));
+	else if (myprintf->conv == '%')
+		return (print_c(myprintf, '%'));
 	else if (myprintf->conv == 's')
 		return (print_s(myprintf));
 	else if (myprintf->conv == 'p')

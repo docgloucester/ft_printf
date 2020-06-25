@@ -33,7 +33,7 @@ void				init(t_printf *myprintf);
 void				get_parsing_params(const char *to_parse, t_printf *myprintf);
 int					complete_field_len(t_printf *myprintf, int nbwritten);
 
-int					print_c(t_printf *myprintf);
+int					print_c(t_printf *myprintf, char forcechar);
 int					print_s(t_printf *myprintf);
 int					print_nb_base(t_printf *myprintf, char *charset, int is_signed, int is_l);
 
