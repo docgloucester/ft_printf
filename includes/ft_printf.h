@@ -30,14 +30,14 @@ typedef struct		s_printf
 }					t_printf;
 
 void				init(t_printf *myprintf);
-void				get_parsing_params(const char *to_parse, t_printf *myprintf);
+void				get_parsing_params(const char *to_parse, t_printf *myptf);
 int					complete_field_len(t_printf *myprintf, int nbwritten);
 
 int					print_c(t_printf *myprintf, char forcechar);
 int					print_s(t_printf *myprintf);
-int					print_nb_base(t_printf *myprintf, char *charset, int is_signed, int is_l);
+int					print_nb_base(t_printf *myptf, char *cs, int sgd, int lon);
 
 int					display(t_printf *myprintf);
-int					ft_printf(const char*, ...);
+int					ft_printf(const char *to_parse, ...);
 
 #endif

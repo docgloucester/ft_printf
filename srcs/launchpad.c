@@ -90,7 +90,8 @@ int		complete_field_len(t_printf *myprintf, int nbwritten)
 
 	i = nbwritten;
 	c = ' ';
-	if (myprintf->zero && !myprintf->minus && !(ft_strchr("pdiuxX", myprintf->conv) && myprintf->precision != -1))
+	if (myprintf->zero && !myprintf->minus
+		&& !(ft_strchr("pdiuxX", myprintf->conv) && myprintf->precision != -1))
 		c = '0';
 	while (i++ < myprintf->field_len)
 		write(1, &c, 1);
