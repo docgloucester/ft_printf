@@ -20,23 +20,22 @@ int	print_s(t_printf *myprintf)
 
 	nbtofillfield = 0;
 	str = va_arg(myprintf->args, const char*);
+	if (!str)
+		str = "(null)";
 	len = ft_strlen(str);
-	if (str)
+	if (myprintf->precision >= 0 && myprintf->precision < len)
 	{
-		if (myprintf->precision >= 0 && myprintf->precision < len)
-		{
-			if (myprintf->field_len > myprintf->precision && !myprintf->minus)
-				nbtofillfield = complete_field_len(myprintf, myprintf->precision);
-			write(1, str, myprintf->precision);
-			if (myprintf->field_len > myprintf->precision && myprintf->minus)
-				nbtofillfield = complete_field_len(myprintf, myprintf->precision);
-			return (myprintf->precision + nbtofillfield);
-		}
-		if (myprintf->field_len > len && !myprintf->minus)
-			nbtofillfield = complete_field_len(myprintf, len);
-		write(1, str, len);
-		if (myprintf->field_len > len && myprintf->minus)
-			nbtofillfield = complete_field_len(myprintf, len);
+		if (myprintf->field_len > myprintf->precision && !myprintf->minus)
+			nbtofillfield = complete_field_len(myprintf, myprintf->precision);
+		write(1, str, myprintf->precision);
+		if (myprintf->field_len > myprintf->precision && myprintf->minus)
+			nbtofillfield = complete_field_len(myprintf, myprintf->precision);
+		return (myprintf->precision + nbtofillfield);
 	}
+	if (myprintf->field_len > len && !myprintf->minus)
+		nbtofillfield = complete_field_len(myprintf, len);
+	write(1, str, len);
+	if (myprintf->field_len > len && myprintf->minus)
+		nbtofillfield = complete_field_len(myprintf, len);
 	return (len + nbtofillfield);
 }
