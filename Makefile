@@ -14,19 +14,19 @@ NAME	=	libftprintf.a
 LIBDIR	=	libft/
 LIBFT	=	libft.a
 SRCSF	=	ft_printf.c launchpad.c printc.c prints.c printnb.c
-#SRCS_BF	=	
 SRCDIR	=	srcs/
 INDIR	=	includes/
 CC		=	gcc
 CFLAGS	=	-Wall -Wextra -Werror
 
 SRCS	=	$(addprefix $(SRCDIR),$(SRCSF))
-#SRCS_B	=	$(addprefix $(SRCDIR),$(SRCS_BF))
 OBJS	=	$(SRCS:.c=.o)
 OBJS_B	=	$(SRCS_B:.c=.o)
 
 .c.o	:
 			$(CC) $(CFLAGS) -I$(LIBDIR) -I$(INDIR) -c $< -o $(<:.c=.o)
+
+bonus	:	all
 
 all		:	$(NAME)
 
@@ -34,9 +34,6 @@ $(NAME)	:	$(OBJS)
 			make -C $(LIBDIR)
 			cp $(LIBDIR)$(LIBFT) $(NAME)
 			ar -vrs $(NAME) $(OBJS)
-
-#bonus	:	$(NAME) $(OBJS_B)
-#			ar -vrs $(NAME) $(OBJS_B)
 
 libft	:
 			make -C $(LIBDIR)
