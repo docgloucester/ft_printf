@@ -40,7 +40,7 @@ void	get_parsing_params(const char *to_parse, t_printf *myprintf)
 			(myprintf->i)++;
 		if (myprintf->field_len < 0)
 		{
-			myprintf->precision = -(myprintf->precision);
+			myprintf->field_len = -(myprintf->field_len);
 			myprintf->minus = '-';
 		}
 	}
@@ -53,7 +53,7 @@ void	get_parsing_params(const char *to_parse, t_printf *myprintf)
 		while (ft_strchr("0123456789*", to_parse[myprintf->i]))
 			(myprintf->i)++;
 		if (myprintf->precision < 0)
-			myprintf->precision = 0;
+			myprintf->precision = -1;
 	}
 	if (ft_strchr("cspdiuxX%", to_parse[myprintf->i]))
 		myprintf->conv = to_parse[(myprintf->i)++];
@@ -68,10 +68,7 @@ int		display(t_printf *myprintf)
 	else if (myprintf->conv == 's')
 		return (print_s(myprintf));
 	else if (myprintf->conv == 'p')
-	{
-		write(1, "0x", 2);
-		return (2 + print_nb_base(myprintf, "0123456789abcdef", 0, 1));
-	}
+		return (print_nb_base(myprintf, "0123456789abcdef", 0, 1));
 	else if ((myprintf->conv == 'd') || (myprintf->conv == 'i'))
 		return (print_nb_base(myprintf, "0123456789", 1, 0));
 	else if (myprintf->conv == 'u')

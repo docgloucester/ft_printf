@@ -12,45 +12,51 @@
 
 #include <ft_printf.h>
 
-int	prnt(t_printf *myptf, unsigned long long nb, char *chst, int nbd, int neg)
+int	prnt(t_printf *myptf, unsigned long long nb, char *chst, int nbd, int prl)
 {
 	int nbtofillfield;
 
 	nbtofillfield = 0;
-	if (neg && myptf->zero && myptf->precision == -1)
+	if (prl == 1 && myptf->zero && myptf->precision == -1)
 		write(1, "-", 1);
+	if (myptf->conv == 'p' && myptf->zero && myptf->precision == -1)
+		write(1, "0x", 2);
 	if (myptf->precision >= 0 && myptf->precision > nbd)
 	{
-		if (myptf->field_len > (myptf->precision + neg) && !myptf->minus)
-			nbtofillfield = complete_field_len(myptf, myptf->precision + neg);
-		if (neg && (!myptf->zero || (myptf->zero && myptf->precision)))
+		if (myptf->field_len > (myptf->precision + prl) && !myptf->minus)
+			nbtofillfield = complete_field_len(myptf, myptf->precision + prl);
+		if (prl == 1 && (!myptf->zero || (myptf->zero && myptf->precision)))
 			write(1, "-", 1);
+		if (myptf->conv == 'p' && (!myptf->zero || (myptf->zero && myptf->precision)))
+			write(1, "0x", 2);
 		while (nbd++ < myptf->precision)
 			write(1, "0", 1);
 		ft_putnbr_uns_base(nb, chst);
-		if (myptf->field_len > (myptf->precision + neg) && myptf->minus)
-			nbtofillfield = complete_field_len(myptf, myptf->precision + neg);
-		return (myptf->precision + neg + nbtofillfield);
+		if (myptf->field_len > (myptf->precision + prl) && myptf->minus)
+			nbtofillfield = complete_field_len(myptf, myptf->precision + prl);
+		return (myptf->precision + prl + nbtofillfield);
 	}
-	if (myptf->field_len > (nbd + neg) && !myptf->minus)
-		nbtofillfield = complete_field_len(myptf, nbd + neg);
-	if (neg && (!myptf->zero || (myptf->zero && myptf->precision != -1)))
+	if (myptf->field_len > (nbd + prl) && !myptf->minus)
+		nbtofillfield = complete_field_len(myptf, nbd + prl);
+	if (prl == 1 && (!myptf->zero || (myptf->zero && myptf->precision != -1)))
 		write(1, "-", 1);
+	if (myptf->conv == 'p' && (!myptf->zero || (myptf->zero && myptf->precision != -1)))
+		write(1, "0x", 2);
 	if (!(nb == 0 && !myptf->precision))
 		ft_putnbr_uns_base(nb, chst);
-	if (myptf->field_len > (nbd + neg) && myptf->minus)
-		nbtofillfield = complete_field_len(myptf, nbd + neg);
-	return (nbd + neg + nbtofillfield);
+	if (myptf->field_len > (nbd + prl) && myptf->minus)
+		nbtofillfield = complete_field_len(myptf, nbd + prl);
+	return (nbd + prl + nbtofillfield);
 }
 
 int	print_nb_base(t_printf *myprintf, char *charset, int is_signed, int is_l)
 {
 	unsigned long long int	nb;
-	int						is_neg;
+	int						prefix_len;
 	long long int			temp;
 	int						nb_digits;
 
-	is_neg = 0;
+	prefix_len = 0;
 	if (is_signed)
 	{
 		if (is_l == 1)
@@ -64,7 +70,7 @@ int	print_nb_base(t_printf *myprintf, char *charset, int is_signed, int is_l)
 		else
 			temp = va_arg(myprintf->args, int);
 		nb = temp < 0 ? -temp : temp;
-		is_neg = temp < 0 ? 1 : 0;
+		prefix_len = temp < 0 ? 1 : 0;
 	}
 	else
 	{
@@ -79,8 +85,10 @@ int	print_nb_base(t_printf *myprintf, char *charset, int is_signed, int is_l)
 		else
 			nb = va_arg(myprintf->args, unsigned int);
 	}
+	if (myprintf->conv == 'p')
+		prefix_len += 2;
 	nb_digits = ft_nbdigits_base(nb, ft_strlen(charset));
 	if (nb == 0 && !myprintf->precision)
 		nb_digits--;
-	return (prnt(myprintf, nb, charset, nb_digits, is_neg));
+	return (prnt(myprintf, nb, charset, nb_digits, prefix_len));
 }
