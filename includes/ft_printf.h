@@ -27,6 +27,7 @@ typedef struct		s_printf
 	int				field_len;
 	int				prec;
 	char			conv;
+	int				is_l;
 }					t_printf;
 
 typedef struct		s_number

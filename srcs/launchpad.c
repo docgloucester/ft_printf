@@ -19,6 +19,7 @@ void	init(t_printf *myprintf)
 	myprintf->field_len = -1;
 	myprintf->prec = -1;
 	myprintf->conv = 0;
+	myprintf->is_l = 0;
 }
 
 void	get_parsing_params2(const char *to_parse, t_printf *myprintf)
@@ -33,6 +34,14 @@ void	get_parsing_params2(const char *to_parse, t_printf *myprintf)
 			(myprintf->i)++;
 		if (myprintf->prec < 0)
 			myprintf->prec = -1;
+	}
+	while (ft_strchr("lh", to_parse[myprintf->i]))
+	{
+		if (to_parse[myprintf->i] == 'l')
+			myprintf->is_l++;
+		if (to_parse[myprintf->i] == 'h')
+			myprintf->is_l--;
+		myprintf->i++;
 	}
 	if (ft_strchr("cspdiuxX%", to_parse[myprintf->i]))
 		myprintf->conv = to_parse[(myprintf->i)++];
@@ -75,13 +84,13 @@ int		display(t_printf *myprintf)
 	else if (myprintf->conv == 'p')
 		return (print_nb_base(myprintf, "0123456789abcdef", 0, 1));
 	else if ((myprintf->conv == 'd') || (myprintf->conv == 'i'))
-		return (print_nb_base(myprintf, "0123456789", 1, 0));
+		return (print_nb_base(myprintf, "0123456789", 1, myprintf->is_l));
 	else if (myprintf->conv == 'u')
-		return (print_nb_base(myprintf, "0123456789", 0, 0));
+		return (print_nb_base(myprintf, "0123456789", 0, myprintf->is_l));
 	else if (myprintf->conv == 'x')
-		return (print_nb_base(myprintf, "0123456789abcdef", 0, 0));
+		return (print_nb_base(myprintf, "0123456789abcdef", 0, myprintf->is_l));
 	else if (myprintf->conv == 'X')
-		return (print_nb_base(myprintf, "0123456789ABCDEF", 0, 0));
+		return (print_nb_base(myprintf, "0123456789ABCDEF", 0, myprintf->is_l));
 	return (0);
 }
 
