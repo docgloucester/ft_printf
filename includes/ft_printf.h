@@ -25,9 +25,15 @@ typedef struct		s_printf
 	char			minus;
 	char			zero;
 	int				field_len;
-	int				precision;
+	int				prec;
 	char			conv;
 }					t_printf;
+
+typedef struct		s_number
+{
+	unsigned long long	number;
+	int					nbd;
+}					t_nb;
 
 void				init(t_printf *myprintf);
 void				get_parsing_params(const char *to_parse, t_printf *myptf);

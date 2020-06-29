@@ -23,14 +23,14 @@ int	print_s(t_printf *myprintf)
 	if (!str)
 		str = "(null)";
 	len = ft_strlen(str);
-	if (myprintf->precision >= 0 && myprintf->precision < len)
+	if (myprintf->prec >= 0 && myprintf->prec < len)
 	{
-		if (myprintf->field_len > myprintf->precision && !myprintf->minus)
-			nbtofillfield = complete_field_len(myprintf, myprintf->precision);
-		write(1, str, myprintf->precision);
-		if (myprintf->field_len > myprintf->precision && myprintf->minus)
-			nbtofillfield = complete_field_len(myprintf, myprintf->precision);
-		return (myprintf->precision + nbtofillfield);
+		if (myprintf->field_len > myprintf->prec && !myprintf->minus)
+			nbtofillfield = complete_field_len(myprintf, myprintf->prec);
+		write(1, str, myprintf->prec);
+		if (myprintf->field_len > myprintf->prec && myprintf->minus)
+			nbtofillfield = complete_field_len(myprintf, myprintf->prec);
+		return (myprintf->prec + nbtofillfield);
 	}
 	if (myprintf->field_len > len && !myprintf->minus)
 		nbtofillfield = complete_field_len(myprintf, len);

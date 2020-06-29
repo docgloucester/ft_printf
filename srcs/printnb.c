@@ -12,52 +12,83 @@
 
 #include <ft_printf.h>
 
-int	prnt(t_printf *myptf, unsigned long long nb, char *chst, int nbd, int prl)
+void	prefix(t_printf *myptf, int prl)
+{
+	if (prl == 1 && myptf->zero && myptf->prec == -1)
+		write(1, "-", 1);
+	if (myptf->conv == 'p' && myptf->zero && myptf->prec == -1)
+		write(1, "0x", 2);
+}
+
+int		no_pr(t_printf *myptf, t_nb nb, int prl, char *chst)
+{
+	int	nbtofillfield;
+
+	nbtofillfield = 0;
+	if (myptf->field_len > (nb.nbd + prl) && !myptf->minus)
+		nbtofillfield = complete_field_len(myptf, nb.nbd + prl);
+	if (prl == 1 && (!myptf->zero || (myptf->zero && myptf->prec != -1)))
+		write(1, "-", 1);
+	if (myptf->conv == 'p'
+		&& (!myptf->zero || (myptf->zero && myptf->prec != -1)))
+		write(1, "0x", 2);
+	if (!(nb.number == 0 && !myptf->prec))
+		ft_putnbr_uns_base(nb.number, chst);
+	if (myptf->field_len > (nb.nbd + prl) && myptf->minus)
+		nbtofillfield = complete_field_len(myptf, nb.nbd + prl);
+	return (nb.nbd + prl + nbtofillfield);
+}
+
+int		prnt(t_printf *myptf, t_nb nb, char *chst, int prl)
 {
 	int nbtofillfield;
 
 	nbtofillfield = 0;
-	if (prl == 1 && myptf->zero && myptf->precision == -1)
-		write(1, "-", 1);
-	if (myptf->conv == 'p' && myptf->zero && myptf->precision == -1)
-		write(1, "0x", 2);
-	if (myptf->precision >= 0 && myptf->precision > nbd)
+	nb.nbd = ft_nbdigits_base(nb.number, ft_strlen(chst));
+	prefix(myptf, prl);
+	if (nb.number == 0 && !myptf->prec)
+		nb.nbd--;
+	if (myptf->prec >= 0 && myptf->prec > nb.nbd)
 	{
-		if (myptf->field_len > (myptf->precision + prl) && !myptf->minus)
-			nbtofillfield = complete_field_len(myptf, myptf->precision + prl);
-		if (prl == 1 && (!myptf->zero || (myptf->zero && myptf->precision)))
+		if (myptf->field_len > (myptf->prec + prl) && !myptf->minus)
+			nbtofillfield = complete_field_len(myptf, myptf->prec + prl);
+		if (prl == 1 && (!myptf->zero || (myptf->zero && myptf->prec)))
 			write(1, "-", 1);
-		if (myptf->conv == 'p' && (!myptf->zero || (myptf->zero && myptf->precision)))
+		if (myptf->conv == 'p'
+			&& (!myptf->zero || (myptf->zero && myptf->prec == -1)))
 			write(1, "0x", 2);
-		while (nbd++ < myptf->precision)
+		while (nb.nbd++ < myptf->prec)
 			write(1, "0", 1);
-		ft_putnbr_uns_base(nb, chst);
-		if (myptf->field_len > (myptf->precision + prl) && myptf->minus)
-			nbtofillfield = complete_field_len(myptf, myptf->precision + prl);
-		return (myptf->precision + prl + nbtofillfield);
+		ft_putnbr_uns_base(nb.number, chst);
+		if (myptf->field_len > (myptf->prec + prl) && myptf->minus)
+			nbtofillfield = complete_field_len(myptf, myptf->prec + prl);
+		return (myptf->prec + prl + nbtofillfield);
 	}
-	if (myptf->field_len > (nbd + prl) && !myptf->minus)
-		nbtofillfield = complete_field_len(myptf, nbd + prl);
-	if (prl == 1 && (!myptf->zero || (myptf->zero && myptf->precision != -1)))
-		write(1, "-", 1);
-	if (myptf->conv == 'p' && (!myptf->zero || (myptf->zero && myptf->precision != -1)))
-		write(1, "0x", 2);
-	if (!(nb == 0 && !myptf->precision))
-		ft_putnbr_uns_base(nb, chst);
-	if (myptf->field_len > (nbd + prl) && myptf->minus)
-		nbtofillfield = complete_field_len(myptf, nbd + prl);
-	return (nbd + prl + nbtofillfield);
+	return (no_pr(myptf, nb, prl, chst));
 }
 
-int	print_nb_base(t_printf *myprintf, char *charset, int is_signed, int is_l)
+void	print_nb_base_u(t_printf *myprintf, int is_l, t_nb *nb)
 {
-	unsigned long long int	nb;
-	int						prefix_len;
-	long long int			temp;
-	int						nb_digits;
+	if (is_l == 1)
+		nb->number = va_arg(myprintf->args, unsigned long);
+	else if (is_l == 2)
+		nb->number = va_arg(myprintf->args, unsigned long long);
+	else if (is_l == -1)
+		nb->number = (unsigned short)va_arg(myprintf->args, int);
+	else if (is_l == -2)
+		nb->number = (unsigned char)va_arg(myprintf->args, int);
+	else
+		nb->number = va_arg(myprintf->args, unsigned int);
+}
 
-	prefix_len = 0;
-	if (is_signed)
+int		print_nb_base(t_printf *myprintf, char *charset, int is_sig, int is_l)
+{
+	t_nb			nb;
+	int				prefix_len;
+	long long int	temp;
+
+	prefix_len = myprintf->conv == 'p' ? 2 : 0;
+	if (is_sig)
 	{
 		if (is_l == 1)
 			temp = va_arg(myprintf->args, long);
@@ -69,26 +100,10 @@ int	print_nb_base(t_printf *myprintf, char *charset, int is_signed, int is_l)
 			temp = (char)va_arg(myprintf->args, int);
 		else
 			temp = va_arg(myprintf->args, int);
-		nb = temp < 0 ? -temp : temp;
-		prefix_len = temp < 0 ? 1 : 0;
+		nb.number = temp < 0 ? -temp : temp;
+		prefix_len += temp < 0 ? 1 : 0;
 	}
 	else
-	{
-		if (is_l == 1)
-			nb = va_arg(myprintf->args, unsigned long);
-		else if (is_l == 2)
-			nb = va_arg(myprintf->args, unsigned long long);
-		else if (is_l == -1)
-			nb = (unsigned short)va_arg(myprintf->args, int);
-		else if (is_l == -2)
-			nb = (unsigned char)va_arg(myprintf->args, int);
-		else
-			nb = va_arg(myprintf->args, unsigned int);
-	}
-	if (myprintf->conv == 'p')
-		prefix_len += 2;
-	nb_digits = ft_nbdigits_base(nb, ft_strlen(charset));
-	if (nb == 0 && !myprintf->precision)
-		nb_digits--;
-	return (prnt(myprintf, nb, charset, nb_digits, prefix_len));
+		print_nb_base_u(myprintf, is_l, &nb);
+	return (prnt(myprintf, nb, charset, prefix_len));
 }

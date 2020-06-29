@@ -17,8 +17,25 @@ void	init(t_printf *myprintf)
 	myprintf->minus = 0;
 	myprintf->zero = 0;
 	myprintf->field_len = -1;
-	myprintf->precision = -1;
+	myprintf->prec = -1;
 	myprintf->conv = 0;
+}
+
+void	get_parsing_params2(const char *to_parse, t_printf *myprintf)
+{
+	if (to_parse[myprintf->i] == '.')
+	{
+		if (to_parse[++(myprintf->i)] == '*')
+			myprintf->prec = va_arg(myprintf->args, int);
+		else
+			myprintf->prec = ft_atoi(to_parse + myprintf->i);
+		while (ft_strchr("0123456789*", to_parse[myprintf->i]))
+			(myprintf->i)++;
+		if (myprintf->prec < 0)
+			myprintf->prec = -1;
+	}
+	if (ft_strchr("cspdiuxX%", to_parse[myprintf->i]))
+		myprintf->conv = to_parse[(myprintf->i)++];
 }
 
 void	get_parsing_params(const char *to_parse, t_printf *myprintf)
@@ -44,19 +61,7 @@ void	get_parsing_params(const char *to_parse, t_printf *myprintf)
 			myprintf->minus = '-';
 		}
 	}
-	if (to_parse[myprintf->i] == '.')
-	{
-		if (to_parse[++(myprintf->i)] == '*')
-			myprintf->precision = va_arg(myprintf->args, int);
-		else
-			myprintf->precision = ft_atoi(to_parse + myprintf->i);
-		while (ft_strchr("0123456789*", to_parse[myprintf->i]))
-			(myprintf->i)++;
-		if (myprintf->precision < 0)
-			myprintf->precision = -1;
-	}
-	if (ft_strchr("cspdiuxX%", to_parse[myprintf->i]))
-		myprintf->conv = to_parse[(myprintf->i)++];
+	get_parsing_params2(to_parse, myprintf);
 }
 
 int		display(t_printf *myprintf)
@@ -88,7 +93,7 @@ int		complete_field_len(t_printf *myprintf, int nbwritten)
 	i = nbwritten;
 	c = ' ';
 	if (myprintf->zero && !myprintf->minus
-		&& !(ft_strchr("pdiuxX", myprintf->conv) && myprintf->precision != -1))
+		&& !(ft_strchr("pdiuxX", myprintf->conv) && myprintf->prec != -1))
 		c = '0';
 	while (i++ < myprintf->field_len)
 		write(1, &c, 1);
